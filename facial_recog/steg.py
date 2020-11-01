@@ -22,11 +22,7 @@ def menuEncode():
     picture, imgPath = facial_features.select_image()
     chosenFeature, pointsList, pixelsList = facial_features.do_facial_feature_recog(picture, imgPath)
     print("The important information: \n Picture chosen: {} \n Chosen feature: {} ".format(picture, chosenFeature))
-    try:
-        LSB.encode(picture,imgPath,pointsList,pixelsList)
-    except ValueError:
-        print("The message is too large to be encoded.")
- 
+    LSB.encode(picture,imgPath,pointsList,pixelsList)
 
 
 def menuDecode():
@@ -36,8 +32,8 @@ def menuDecode():
     #facialFeature = str(input("Enter the facial feature (eyes, mouth, nose): "))
     #we are passing 1 in to the facial_feature_recog function to tell that function to decode
     picture = '1.png'
-    imgPath = '/home/pranmar123/Facial-Feature-Based-Image-Steganography//facial_recog/dataset/1.png'
-    toGetPoints = '/home/pranmar123/Facial-Feature-Based-Image-Steganography//facial_recog/original_dataset/1.png'
+    imgPath = os.path.join(os.getcwd(), "facial_recog", "dataset", picture)
+    toGetPoints = os.path.join(os.getcwd(), "facial_recog", "original_dataset", picture)
     facialFeature = 'nose'
     pointsList = facial_features.do_facial_feature_recog(picture, toGetPoints, 1, facialFeature)
     pointsList = pointsList[1]

@@ -1,5 +1,6 @@
 from PIL import Image
 import face_recognition
+import os
 #convert the secret message binary form based on ASCII value
 def generateData(data):
     newData = []
@@ -60,10 +61,15 @@ def encode(picture,imgPath,points_list,pixels_list):
         raise ValueError("Message is empty") 
     
     newImage = image.copy()
-    encodeMessage(newImage, message, points_list, pixels_list)
+
+    try:
+        encodeMessage(newImage, message, points_list, pixels_list)
+    except ValueError:
+        print("The message is too large to be encoded.")
 
     #newImage.save("/home/pranmar123/Multi-Facial-Steganography/facial_recog/dataset/"+picture)
-    newImage.save("/home/pranmar123/Facial-Feature-Based-Image-Steganography//facial_recog/dataset/1.png")
+    location = os.path.join(os.getcwd(), "1.png")
+    newImage.save(location, "PNG")
 
 
 def decode(picture, imgPath, points_list):

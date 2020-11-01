@@ -6,7 +6,7 @@ import random
 
 def select_image():
     #replace this with a prompt for user to input the path to dataset
-    path = "/home/pranmar123/Facial-Feature-Based-Image-Steganography//facial_recog/dataset"
+    path = os.path.join(os.getcwd(), "facial_recog", "dataset")
     pictures_list = os.listdir(path)
     #randomly selecting a element from our picture list to perform facial feature recognition 
     #picture = str(input("Enter the name of the file you want to use for encoding: "))
@@ -77,6 +77,6 @@ def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
                 x,y = pair[0], pair[1]
                 pixel_list.append(pixels[x,y])
         d.line(points, width=0) #test
-        pil_image.show() #test
+        # pil_image.show() #test
         return facial_feature,points,pixel_list
 
