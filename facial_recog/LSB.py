@@ -68,7 +68,7 @@ def encode(picture,imgPath,points_list,pixels_list):
         print("The message is too large to be encoded.")
 
     #newImage.save("/home/pranmar123/Multi-Facial-Steganography/facial_recog/dataset/"+picture)
-    location = os.path.join(os.getcwd(), "1.png")
+    location = os.path.join(os.getcwd(), "../dataset", "1.png")
     newImage.save(location, "PNG")
 
 
