@@ -7,6 +7,8 @@ import scipy
 import LSB
 import shutil
 
+import config
+
 def main():
     choice = 0
     while choice != '1' and choice != '2': 
@@ -31,7 +33,7 @@ def menuDecode():
     #imgPath = str(input("Enter the path to the image: "))
     #facialFeature = str(input("Enter the facial feature (eyes, mouth, nose): "))
     #we are passing 1 in to the facial_feature_recog function to tell that function to decode
-    picture = '1.png'
+    picture = config.picture
     imgPath = os.path.join(os.getcwd(), "facial_recog", "dataset", picture)
     toGetPoints = os.path.join(os.getcwd(), "facial_recog", "original_dataset", picture)
     facialFeature = 'nose'

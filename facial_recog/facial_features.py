@@ -4,15 +4,17 @@ import face_recognition
 import time
 import random
 
+import config
+
 def select_image():
     #replace this with a prompt for user to input the path to dataset
     path = os.path.join(os.getcwd(), "facial_recog", "original_dataset")
     pictures_list = os.listdir(path)
     #randomly selecting a element from our picture list to perform facial feature recognition 
     #picture = str(input("Enter the name of the file you want to use for encoding: "))
-    picture = '1.png' #test
+    picture = config.picture #test
     os.chdir(path)
-    img_path = path+"/"+picture
+    img_path = os.path.join(path, picture)
     return picture, img_path
 
 
@@ -22,6 +24,7 @@ def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
         pil_image = Image.fromarray(image)
         d = ImageDraw.Draw(pil_image)
 
+        # repeat for each face
         for face_landmarks in face_landmarks_list:
             #combining bottom lip, top lip, and chin into mouth
             #combining left_eye, left_eyebrow, right_eye, right_eyebrow into eyes
@@ -49,27 +52,13 @@ def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
             
             while i < lengthOfPoints:
                 x, y = points[i][0], points[i][1]
-                #adding surrounding points to the total list of points
-                addOne = ((x+1), (y+1))
-                addTwo = ((x+2), (y+2))
-                addThree = ((x+3), (y+3))
-                addFour = ((x+4), (y+4))
-                subOne = ((x-1), (y-1))
-                subTwo = ((x-2), (y-2))
-                subThree = ((x-3), (y-3))
-                subFour = ((x-4), (y-4))
-                points.append(addOne)
-                points.append(addTwo)
-                points.append(addThree)
-                points.append(addFour)
-                points.append(subOne)
-                points.append(subTwo)
-                points.append(subThree)
-                points.append(subFour)
+                #adding surrounding points to the total list of points (in diagonals)
+                for j in range(-10, 10):
+                    points.append((x+j, y+j))
                 i+= 1
             #removing duplicates
             points = list(dict.fromkeys(points))
-            print("This is len of points: ", len(points)) #test
+            print(f"This is len of points: {len(points)}") #test
             #Extracting pixel values
             pixels = pil_image.load()
             pixel_list = []
