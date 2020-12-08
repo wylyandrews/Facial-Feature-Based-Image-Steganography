@@ -50,22 +50,15 @@ def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
             while i < lengthOfPoints:
                 x, y = points[i][0], points[i][1]
                 #adding surrounding points to the total list of points
-                addOne = ((x+1), (y+1))
-                addTwo = ((x+2), (y+2))
-                addThree = ((x+3), (y+3))
-                addFour = ((x+4), (y+4))
-                subOne = ((x-1), (y-1))
-                subTwo = ((x-2), (y-2))
-                subThree = ((x-3), (y-3))
-                subFour = ((x-4), (y-4))
-                points.append(addOne)
-                points.append(addTwo)
-                points.append(addThree)
-                points.append(addFour)
-                points.append(subOne)
-                points.append(subTwo)
-                points.append(subThree)
-                points.append(subFour)
+                for j in range(100):
+                    addOne = ((x+j+1), (y+j+1))
+                    addTwo = ((x+j+2), (y+j+2))
+                    addThree = ((x+j+3), (y+j+3))
+                    addFour = ((x+j+4), (y+j+4))
+                    points.append(addOne)
+                    points.append(addTwo)
+                    points.append(addThree)
+                    points.append(addFour)
                 i+= 1
             #removing duplicates
             points = list(dict.fromkeys(points))
