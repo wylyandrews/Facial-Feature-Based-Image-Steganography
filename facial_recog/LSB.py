@@ -52,11 +52,11 @@ def encodeMessage(newImage, message, points_list,pixels_list):
         newImage.putpixel((x,y), pixel)
 
 
-def encode(picture,imgPath,points_list,pixels_list):
+def encode(picture,imgPath,points_list,pixels_list,imgNum):
     image = Image.open(imgPath,'r')
     maxLen = len(points_list) // 3
     print("This is the maximum number of bytes that can be encoded: ", maxLen)
-    message = str(input("Enter the message you wish to encode: "))
+    message = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
     if (len(message) == 0):
         raise ValueError("Message is empty") 
     
@@ -68,7 +68,7 @@ def encode(picture,imgPath,points_list,pixels_list):
         print("The message is too large to be encoded.")
 
     #newImage.save("/home/pranmar123/Multi-Facial-Steganography/facial_recog/dataset/"+picture)
-    location = os.path.join(os.getcwd(), "../dataset", "1.png")
+    location = os.path.join(os.getcwd(), "../dataset", f"{imgNum}")
     newImage.save(location, "PNG")
 
 
