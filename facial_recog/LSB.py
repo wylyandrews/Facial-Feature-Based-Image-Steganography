@@ -52,7 +52,7 @@ def encodeMessage(newImage, message, points_list,pixels_list):
         newImage.putpixel((x,y), pixel)
 
 
-def encode(picture,imgPath,points_list,pixels_list):
+def encode(picture,imgPath,points_list,pixels_list, i):
     image = Image.open(imgPath,'r')
     maxLen = len(points_list) // 3
     print("This is the maximum number of bytes that can be encoded: ", maxLen)
@@ -68,7 +68,7 @@ def encode(picture,imgPath,points_list,pixels_list):
         print("The message is too large to be encoded.")
 
     #newImage.save("/home/pranmar123/Multi-Facial-Steganography/facial_recog/dataset/"+picture)
-    location = os.path.join(os.getcwd(), "../dataset", "1.png")
+    location = os.path.join(os.getcwd(), "../dataset", i+".png")
     newImage.save(location, "PNG")
 
 

@@ -9,21 +9,56 @@ import shutil
 
 def main():
     choice = 0
-    while choice != '1' and choice != '2': 
-        choice = input("Choose 1 to encode or 2 to decode: ")
+    while choice != '1' and choice != '2' and choice != '3' and choice != '4': 
+        choice = input("Choose 1 to encode, 2 to decode, 3 to encode 20 images, or 4 to decode 20 images: ")
 
     if choice == '1':
         menuEncode()
+    elif choice == '3':
+        multiEncode()
+    elif choice == '4':
+        multiDecode()
     else:
         menuDecode()
 
 
 def menuEncode():
-    picture, imgPath = facial_features.select_image()
+    path = os.path.join(os.getcwd(), "facial_recog", "original_dataset")
+    picture, imgPath = facial_features.select_image(path)
     chosenFeature, pointsList, pixelsList = facial_features.do_facial_feature_recog(picture, imgPath)
     print("The important information: \n Picture chosen: {} \n Chosen feature: {} ".format(picture, chosenFeature))
-    LSB.encode(picture,imgPath,pointsList,pixelsList)
+    LSB.encode(picture,imgPath,pointsList,pixelsList,"4")
 
+def multiEncode():
+    i = 1
+    path = os.path.join(os.getcwd(), "facial_recog", "original_dataset")
+    while i < 21:
+        picture = str(i)+".png" #test
+        os.chdir(path)
+        imgPath = path+"/"+picture
+        chosenFeature, pointsList, pixelsList = facial_features.do_facial_feature_recog(picture, imgPath)
+        print("The important information: \n Picture chosen: {} \n Chosen feature: {} ".format(picture, chosenFeature))
+        LSB.encode(picture,imgPath,pointsList,pixelsList,str(i))
+        i = i + 1
+
+def multiDecode():
+    i = 1
+    print("This is the current path: ", os.getcwd())
+    while i < 21:
+        picture = str(i)+'.png'
+        imgPath = os.path.join(os.getcwd(), "facial_recog", "dataset", picture)
+        toGetPoints = os.path.join(os.getcwd(), "facial_recog", "original_dataset", picture)
+        facialFeature = 'nose'
+        pointsList = facial_features.do_facial_feature_recog(picture, imgPath, 1, facialFeature)
+        pointsList = pointsList[1]
+        try:
+            print("Decoded: {}".format(LSB.decode(picture,imgPath, pointsList)))
+            #shutil will copy the original file and replace the encoded image with the original copy of the image
+            # shutil.copyfile(toGetPoints, imgPath)  
+        except StopIteration:
+            print("Exception")
+            shutil.copyfile(toGetPoints, imgPath)
+        i = i + 1
 
 def menuDecode():
     #picture = str(input("Enter the image with extension (ex: example.png): "))
