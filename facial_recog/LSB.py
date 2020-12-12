@@ -56,7 +56,8 @@ def encode(picture,imgPath,points_list,pixels_list,imgNum):
     image = Image.open(imgPath,'r')
     maxLen = len(points_list) // 3
     print("This is the maximum number of bytes that can be encoded: ", maxLen)
-    message = str(input("Enter the message you wish to encode: "))    if (len(message) == 0):
+    message = str(input("Enter the message you wish to encode: "))
+    if (len(message) == 0):
         raise ValueError("Message is empty") 
     
     newImage = image.copy()
