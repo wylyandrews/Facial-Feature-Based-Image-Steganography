@@ -22,9 +22,9 @@ def formatEncodingBox(startingPoint, imageSize):
     middleOfPicture = imageSize[0]/2
     boxDecider = startingPoint[0] - middleOfPicture
     if boxDecider >= 0:
-        return [startingPoint[0] - 150, startingPoint[1]]
+        return [startingPoint[0] - 175, startingPoint[1]]
     else:
-        return [startingPoint[0] + 150, startingPoint[1]]
+        return [startingPoint[0] + 175, startingPoint[1]]
 
 def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
         image = face_recognition.load_image_file(path)
@@ -54,19 +54,22 @@ def do_facial_feature_recog(img,path, decode = 0, facialFeature = None):
             baselines = face_landmarks[facial_feature]
             points = []
             #this is to increase our points selections
-            lengthOfPoints = len(baselines[0]) - 1
+            lengthOfPoints = len(baselines)
             print("This is length of points before expanding: ", lengthOfPoints) #test
             
-            x, y = baselines[0]
-            x, y = formatEncodingBox([x,y], pil_image.size)
-            if x > pil_image.size[0] / 2:
-                for j in range(-10,10):
-                    for k in range(-10,10):
-                        points.append((x+j, y+k))
-            else:
-                for j in range(-10,10):
-                    for k in range(-10,10):
-                            points.append((x-j, y-k))
+            iterator = 0
+            while iterator < len(baselines):
+                x, y = baselines[iterator]
+                x, y = formatEncodingBox([x,y], pil_image.size)
+                if x > pil_image.size[0] / 2:
+                    for j in range(-10,10):
+                        for k in range(-10,10):
+                            points.append((x+j, y+k))
+                else:
+                    for j in range(-10,10):
+                        for k in range(-10,10):
+                                points.append((x-j, y-k))
+                iterator += 1
 
             #removing duplicates
             points = list(dict.fromkeys(points))

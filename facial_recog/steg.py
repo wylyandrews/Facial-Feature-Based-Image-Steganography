@@ -46,6 +46,12 @@ def multiDecode():
         try:
             print("Decoded: {}".format(LSB.decode(picture,imgPath, pointsList)))
             print("Picture: {}".format(picture))
+            isMessageEqual = LSB.decode(picture,imgPath, pointsList) == config.message
+            if isMessageEqual == True:
+                print(f"\033[94m  The message was encoded and decoded correctly. \033[0m")
+            else:
+                print(f"\033[91m The message was not encoded or decoded correctly. \033[0m")
+
             #shutil will copy the original file and replace the encoded image with the original copy of the image
             # shutil.copyfile(toGetPoints, imgPath)  
         except StopIteration:
@@ -73,6 +79,11 @@ def menuDecode():
     pointsList = pointsList[1]
     try:
         print("Decoded: {}".format(LSB.decode(picture,imgPath, pointsList)))
+        isMessageEqual = LSB.decode(picture,imgPath, pointsList) == config.message
+        if isMessageEqual == True:
+            print(f"\033[94m  The message was encoded and decoded correctly. \033[0m")
+        else:
+            print(f"\033[91m The message was not encoded or decoded correctly. \033[0m")
         #shutil will copy the original file and replace the encoded image with the original copy of the image
         # shutil.copyfile(toGetPoints, imgPath)  
     except StopIteration:

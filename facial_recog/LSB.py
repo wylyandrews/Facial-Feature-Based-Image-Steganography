@@ -1,6 +1,7 @@
 from PIL import Image
 import face_recognition
 import os
+import config
 #convert the secret message binary form based on ASCII value
 def generateData(data):
     newData = []
@@ -56,7 +57,8 @@ def encode(picture,imgPath,points_list,pixels_list,imgNum):
     image = Image.open(imgPath,'r')
     maxLen = len(points_list) // 3
     print("This is the maximum number of bytes that can be encoded: ", maxLen)
-    message = str(input("Enter the message you wish to encode: "))
+    message = config.message
+    # message = str(input("Enter the message you wish to encode: "))
     if (len(message) == 0):
         raise ValueError("Message is empty") 
     
